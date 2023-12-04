@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        username: <input type="text" id="username"><br>
+        password: <input type="password" id="password">
+    </div>
+    <label style="color: red;" id="els"></label><br>
+    <button onclick="login()">login</button>
+    <script>
+        async function login(){
+            var iput ={
+                username : document.getElementById("username").value,
+                password : document.getElementById("password").value 
+            }
+            var response = await fetch('https://dummyjson.com/auth/login',{
+                method : 'POST',
+                headers:{
+                'content-type' : 'application/json'
+                },
+                body:JSON.stringify(iput)
+            });
+            if(response.status==200){
+                var data = await response.json();
+                localStorage.setItem("token",data.token)
+                console.log("success")
+
+            }
+            else{
+                document.getElementById('els').innerText="invalid credentials"
+            }
+            console.log(respone,data.token)
+
+        }
+    </script>
+</body>
+</html>
